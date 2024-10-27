@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cspark.jwt_boot.mapper.AuthenticationMapper">
+
+    <select id="selectAuthenticationByUsername" parameterType="String" resultType="com.cspark.jwt_boot.model.Authentication">
+        SELECT * FROM authentication WHERE username = #{username}
+    </select>
+
+    <!-- 사용자 추가 -->
+    <insert id="insertAuthentication" parameterType="com.cspark.jwt_boot.model.Authentication">
+        INSERT INTO authentication (username, password) VALUES (#{username}, #{password})
+    </insert>
+
+</mapper>

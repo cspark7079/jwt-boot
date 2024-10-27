@@ -2,7 +2,10 @@ package com.cspark.jwt_boot.security;
 
 import com.cspark.jwt_boot.config.jwt.JwtUtil;
 import com.cspark.jwt_boot.config.jwt.MyUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cspark.jwt_boot.model.Authentication;
+import com.cspark.jwt_boot.service.AuthenticationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -12,19 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationService authenticationService;
 
-    @Autowired
-    private MyUserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final MyUserDetailsService userDetailsService;
+
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/authenticate")
-    public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<String> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+
+        Authentication authentication = authenticationService.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+        if(authentication == null) {
+            return ResponseEntity.status(401).body("Invalid username or password");
+        }
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -38,6 +48,8 @@ public class AuthenticationController {
 
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
-        return jwt;
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/json")
+                .body(jwt);
     }
 }
