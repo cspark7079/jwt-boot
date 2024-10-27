@@ -1,7 +1,23 @@
 spring:
   application:
     name: jwt-boot
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/jwt-boot_db
+    username: root
+    password: root
+  thymeleaf:
+    cache: false
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL57Dialect
+#    open-in-view: false
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: none
 
 jwt:
   expiration_time: 86400000 #1?
   secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+
+mybatis:
+  mapper-locations: mapper/*.xml
