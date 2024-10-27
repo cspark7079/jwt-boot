@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cspark.jwt_boot.mapper.EmployeesMapper">
+    <select id="selectEmployee" resultType="com.cspark.jwt_boot.model.Employees">
+        SELECT employee_id, first_name, last_name, data_1, data_2
+        FROM employees
+    </select>
+</mapper>
