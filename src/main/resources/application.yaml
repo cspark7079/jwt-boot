@@ -14,6 +14,10 @@ spring:
 #    show-sql: true
 #    hibernate:
 #      ddl-auto: none
+logging:
+  level:
+    root: INFO
+    com.cspark: DEBUG
 
 jwt:
   expiration_time: 86400000 #1?
