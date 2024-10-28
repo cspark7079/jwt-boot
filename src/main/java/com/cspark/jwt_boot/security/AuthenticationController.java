@@ -2,6 +2,8 @@ package com.cspark.jwt_boot.security;
 
 import com.cspark.jwt_boot.config.jwt.JwtUtil;
 import com.cspark.jwt_boot.config.jwt.MyUserDetailsService;
+import com.cspark.jwt_boot.dto.AuthenticationDto.AuthenticationRequest;
+import com.cspark.jwt_boot.dto.AuthenticationDto.AuthenticationResponse;
 import com.cspark.jwt_boot.model.Authentication;
 import com.cspark.jwt_boot.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +29,12 @@ public class AuthenticationController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         Authentication authentication = authenticationService.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         if(authentication == null) {
-            return ResponseEntity.status(401).body("Invalid username or password");
+            return ResponseEntity.status(401).body(null);
         }
 
         try {
@@ -49,7 +51,6 @@ public class AuthenticationController {
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
         return ResponseEntity.ok()
-                .header("Content-Type", "application/json")
-                .body(jwt);
+                .body(new AuthenticationResponse(jwt));
     }
 }

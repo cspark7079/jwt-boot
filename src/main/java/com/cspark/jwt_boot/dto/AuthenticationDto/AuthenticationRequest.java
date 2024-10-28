@@ -1,4 +1,4 @@
-package com.cspark.jwt_boot.security;
+package com.cspark.jwt_boot.dto.AuthenticationDto;
 
 import lombok.Data;
 
