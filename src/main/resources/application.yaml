@@ -8,12 +8,15 @@ spring:
     password: root
   thymeleaf:
     cache: false
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQL57Dialect
-#    open-in-view: false
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: none
+  doc:
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+
+springdoc:
+  show-login-endpoint: true
+
 logging:
   level:
     root: INFO

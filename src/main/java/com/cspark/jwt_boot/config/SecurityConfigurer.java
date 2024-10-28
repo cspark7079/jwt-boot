@@ -30,9 +30,18 @@ public class SecurityConfigurer {
         http
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/authenticate").permitAll()  // /authenticate는 허용
+                        .requestMatchers("/authenticate",
+                                "/v2/api-docs",
+                                "/swagger-resources/**",
+                                "/swagger-ui/**",
+                                "/webjars/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        )
+                        .permitAll()  // /authenticate는 허용
                         .anyRequest().authenticated()  // 나머지는 인증 필요
                 )
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // JWT 사용하므로 세션 상태 없음으로 설정
                 );

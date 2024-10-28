@@ -6,6 +6,7 @@ import com.cspark.jwt_boot.dto.AuthenticationDto.AuthenticationRequest;
 import com.cspark.jwt_boot.dto.AuthenticationDto.AuthenticationResponse;
 import com.cspark.jwt_boot.model.Authentication;
 import com.cspark.jwt_boot.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,7 @@ public class AuthenticationController {
 
     private final JwtUtil jwtUtil;
 
+    @Operation(summary = "login", description = "로그인")
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
